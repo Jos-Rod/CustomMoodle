@@ -15,12 +15,16 @@ import java.util.List;
 public interface StudentDAO {
     //Operaciones de base de datos, es la interfaz\
     
-    
-    
     public Student save(Student s);
     
     public List<Student> findAll();
     
     public Student find(String id);
+    
+    public Student findByLastName(String lastName);
+    
+    public void delete(Student student);
+    
+    public void update(Student student);
     
 }

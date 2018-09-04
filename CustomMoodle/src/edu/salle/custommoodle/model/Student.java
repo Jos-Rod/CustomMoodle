@@ -5,6 +5,8 @@
  */
 package edu.salle.custommoodle.model;
 
+import java.util.Objects;
+
 /**
  *
  * @author joser
@@ -53,6 +55,25 @@ public class Student {
     @Override
     public String toString() {
         return String.format("id=%s\n,name=%s\n,lastName=%s", id, name, lastName);
+    }
+
+    //para saber cuando un objeto es igual a otro
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Student other = (Student) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
     }
     
 }

@@ -40,5 +40,36 @@ public class StudentDAOListSimple implements StudentDAO {
         }
         return null;
     }
+
+    @Override
+    public Student findByLastName(String lastName) {
+        
+        lastName = lastName.toLowerCase().trim(); //trim quita los espacios
+        Student res = null;
+        for (Student student: studentList) {
+            
+            if (student.getLastName().toLowerCase().contains(lastName)) {
+                return student;
+            }
+            
+        }
+        return null;
+        
+    }
+
+    @Override
+    public void delete(Student student) {
+        
+        studentList.remove(student);
+        
+    }
+
+    @Override
+    public void update(Student student) {
+        
+        int pos = studentList.indexOf(student);
+        studentList.set(pos, student);
+        
+    }
     
 }

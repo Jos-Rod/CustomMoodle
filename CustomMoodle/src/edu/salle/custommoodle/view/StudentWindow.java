@@ -7,6 +7,8 @@ package edu.salle.custommoodle.view;
 
 import edu.salle.custommoodle.businesslogic.StudentBLO;
 import edu.salle.custommoodle.model.Student;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -35,6 +37,7 @@ public class StudentWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         tfLastName = new javax.swing.JTextField();
@@ -43,6 +46,13 @@ public class StudentWindow extends javax.swing.JFrame {
         bSave = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         tfId = new javax.swing.JTextField();
+        btnUpdate = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tableStudents = new javax.swing.JTable();
+        btnRefresh = new javax.swing.JButton();
+
+        jButton1.setText("jButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -75,6 +85,32 @@ public class StudentWindow extends javax.swing.JFrame {
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 60, 40, -1));
         getContentPane().add(tfId, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 60, 50, 20));
 
+        btnUpdate.setText("Update");
+        getContentPane().add(btnUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, -1, -1));
+
+        btnDelete.setText("Delete");
+        getContentPane().add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 150, -1, -1));
+
+        tableStudents.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Id", "Name", "Last name"
+            }
+        ));
+        jScrollPane1.setViewportView(tableStudents);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 450, 300));
+
+        btnRefresh.setText("Refresh");
+        btnRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefreshActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnRefresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 150, -1, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -102,13 +138,49 @@ public class StudentWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_bSaveActionPerformed
 
     
+    public void clearTable() {
+        DefaultTableModel dtm = (DefaultTableModel)tableStudents.getModel();
+        while (dtm.getRowCount()>0) {
+            dtm.removeRow(0);
+        }
+    }
+    
+    public void refreshTable() {
+        clearTable();
+        
+        List<Student> studentList = studentBLO.findAll();
+        DefaultTableModel dtm = (DefaultTableModel) tableStudents.getModel(); //Hacer referencia a la tabla en la vista
+        Object[] emptyRow = {""}; //un renglon vacio
+        
+        for (int i = 0; i < studentList.size(); i++) {
+            dtm.addRow(emptyRow); //para poder anadir un renglon, tienes que agregarlo primero vacio
+            dtm.setValueAt(studentList.get(i).getId(), i, 0);
+            dtm.setValueAt(studentList.get(i).getName(), i, 1);
+            dtm.setValueAt(studentList.get(i).getLastName(), i, 2);
+            //              valor                 renglon, columna
+        }
+        
+    }
+    
+    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
+        // TODO add your handling code here:
+        refreshTable();
+    }//GEN-LAST:event_btnRefreshActionPerformed
+
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bSave;
     private javax.swing.JButton bSearch;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnRefresh;
+    private javax.swing.JButton btnUpdate;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tableStudents;
     private javax.swing.JTextField tfId;
     private javax.swing.JTextField tfLastName;
     private javax.swing.JTextField tfName;
